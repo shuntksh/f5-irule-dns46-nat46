@@ -1,0 +1,4 @@
+f5_nat46_irule
+==============
+
+This iRule is to allow internal IPv4 hosts to communicate with *ANY* IPv6 only hosts in the internet by dynamically translating AAAA responses into internal only A responses and converting back to original IPv6 destination address when actual IPv4 traffic is passing through LTM.  iRule for DNS46 - Translate AAAA response into internal only A response and keep it into session table iRule for NAT46 - Lookup translation table and convert internal only IPv4 destination address back to original IPv6 address and SNAT with IPv6 address as well for NAT46.  The rule requires LTM + DNS add-on software module and the rule below uses high-speed logging command both for debug logging and translation purposes. You can change HSL into normal log command if necessary.
