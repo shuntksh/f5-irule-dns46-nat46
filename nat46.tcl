@@ -64,7 +64,7 @@ when CLIENT_ACCEPTED priority 100 {
   set log_head   "\[nat46\]([IP::client_addr])"
   set log_head_d "$log_head\(debug\)"
 
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME executed *****"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME executed *****"}
 
 }
 
@@ -76,13 +76,13 @@ when CLIENT_ACCEPTED priority 200 {
   set dst_v4 [IP::local_addr]
   set dst_v6 [table lookup -subtable "t_dns46" $dst_v4]
 
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d Looked up NAT64 table for $dst_v4 matched $dst_v6"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d Looked up NAT64 table for $dst_v4 matched $dst_v6"}
   
   if {$dst_v6 != ""} {
         
     node $dst_v6
     
-    if {$DBG==1}{HSL::send $hsl "<191> $log_head_d Changed Destination to \[$dst_v6\]"}
+    if {$DBG}{HSL::send $hsl "<191> $log_head_d Changed Destination to \[$dst_v6\]"}
 
   } else {
     
@@ -93,12 +93,12 @@ when CLIENT_ACCEPTED priority 200 {
     HSL::send $hsl "<190> $log_head Send Traffic to Sorry IP\[$static::Sorry_IP\ (snat $snat_v4) ]"
   }
   
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME completed *****"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME completed *****"}
 }
 
 
 when SERVER_CONNECTED {
 
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d NAT46 Added Src \{$src_v4 => [IP::local_addr]\} \, Dst\{$dst_v4 => [IP::server_addr]\}"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d NAT46 Added Src \{$src_v4 => [IP::local_addr]\} \, Dst\{$dst_v4 => [IP::server_addr]\}"}
 
 }

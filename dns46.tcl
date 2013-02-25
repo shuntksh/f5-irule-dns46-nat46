@@ -88,7 +88,7 @@ when CLIENT_ACCEPTED priority 100 {
   set static::Last_Addr  100.64.235.200
 
   # Timeout value for NAT46 entris (second)
-  #     Note: keep this value smaller make this iRule perform well.
+  #     Note: to keep this value smaller make this iRule performing well.
   set static::Timeout 300
   set static::Lifetime 3600
 
@@ -100,12 +100,12 @@ when CLIENT_ACCEPTED priority 100 {
   set log_head   "\[dns46\]([IP::client_addr])"
   set log_head_d "$log_head\(debug\)"
 
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME executed *****"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME executed *****"}
 
   # Rule ignores IPv6 clients as it is not necesarry 
   # to patch any AAAA record 
   if {[IP::version] == 6} { 
-    if {$DBG==1}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME skipped - IPv6 connection *****"} 
+    if {$DBG}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME skipped - IPv6 connection *****"} 
     return
   }
 }
@@ -115,7 +115,7 @@ when DNS_REQUEST priority 100 {
   set query_host [DNS::question name]
   set query_type [DNS::question type]
   
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d User Query: $query_type - $query_host"} 
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d User Query: $query_type - $query_host"} 
 
 }
 
@@ -124,18 +124,18 @@ when DNS_RESPONSE {
 
   set rr [DNS::answer]
   
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d Query Response $rr"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d Query Response $rr"}
 
   # Lookup AAAA for the host if *** No A Record Found *** 
   if { [DNS::question type] == "A" && ($rr == "" || [DNS::type $rr] == "CNAME") } {
     
-    if {$DBG==1}{HSL::send $hsl "<191> $log_head_d RESOLVE::lookup - \"AAAA - $query_host\"" } 
+    if {$DBG}{HSL::send $hsl "<191> $log_head_d RESOLVE::lookup - \"AAAA - $query_host\"" } 
     
     set resolved_v6ips   [RESOLV::lookup @$static::NS -aaaa $query_host]
     set s_resolved_v6ips [llength $resolved_v6ips]
     set new_v4ips    ""
 
-    if {$DBG==1}{HSL::send $hsl "<191> $log_head_d RESOLVE::lookup got response(s) - ($s_resolved_v6ips) $resolved_v6ips"}
+    if {$DBG}{HSL::send $hsl "<191> $log_head_d RESOLVE::lookup got response(s) - ($s_resolved_v6ips) $resolved_v6ips"}
     
     # Theoretically it is unnecessary but just for sure
     if {$resolved_v6ips equals ""}{return}    
@@ -154,7 +154,7 @@ when DNS_RESPONSE {
         foreach k_v4ip $k_v4ips {
           if { $r_v6ip equals [table lookup -notouch -subtable "t_dns46" $k_v4ip]}{
             
-            if {$DBG==1}{HSL::send $hsl "<191> $log_head_d Entry in DNS46 for $k_v4ip : $r_v6ip will be timed out in [table timeout -subtable "t_dns46" -remaining $k_v4ip] second(s)"}
+            if {$DBG}{HSL::send $hsl "<191> $log_head_d Entry in DNS46 for $k_v4ip : $r_v6ip will be timed out in [table timeout -subtable "t_dns46" -remaining $k_v4ip] second(s)"}
             
             # Update the timestamp for the found entry
             table lookup -subtable "t_dns46" $k_v4ip
@@ -164,10 +164,10 @@ when DNS_RESPONSE {
         }
       }
     } else {
-      if {$DBG==1}{HSL::send $hsl "<191> $log_head_d NAT46 table is empty now"}
+      if {$DBG}{HSL::send $hsl "<191> $log_head_d NAT46 table is empty now"}
     }
     
-    if {$DBG==1}{HSL::send $hsl "<191> $log_head_d Matched following IPv4 addr from the tbl: $new_v4ips"}
+    if {$DBG}{HSL::send $hsl "<191> $log_head_d Matched following IPv4 addr from the tbl: $new_v4ips"}
 
 
     # Fetch available IPv4 address correspondent to AAAA record(s)
@@ -224,8 +224,8 @@ when DNS_RESPONSE {
               into A response for [DNS::question name]."      
     }
   } else {
-    if {$DBG==1}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME skipped - found A record or is AAAA query *****"}
+    if {$DBG}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME skipped - found A record or is AAAA query *****"}
     return
   }
-  if {$DBG==1}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME successfully completed *****"}
+  if {$DBG}{HSL::send $hsl "<191> $log_head_d  ***** iRule: $static::RULE_NAME successfully completed *****"}
 }  
