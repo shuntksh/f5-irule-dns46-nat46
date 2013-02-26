@@ -95,8 +95,8 @@ ltm virtual vs-nat46 {
 }
     ```
 ## Sample Output
+<center><img src="https://raw.github.com/festango/f5-irule-nat46/master/sample/screen_shot.png" alt="Sample Output" width="800"></center>
 
-![Sample](https://raw.github.com/festango/f5-irule-nat46/master/sample/screen_shot.png)
 
 
 
