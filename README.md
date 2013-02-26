@@ -94,7 +94,9 @@ ltm virtual vs-nat46 {
   vlans-disabled
 }
     ```
+
 ## Sample Output
+
 <img src="https://raw.github.com/festango/f5-irule-nat46/master/sample/screen_shot.png" alt="Sample Output" width="800">
 
 
