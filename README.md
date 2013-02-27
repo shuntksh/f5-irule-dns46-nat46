@@ -50,23 +50,23 @@ Currently, no application level gateway has been implemented or tested. Only HTT
 3. DNS express or internal BIND can be used for DNS forwarder else create a DNS server pool and assigned it to dns46 vs
 
     ```
-ltm virtual vs-dns46 {
-  destination 10.1.101.222:domain
-  ip-protocol udp
-  mask 255.255.255.255
-  profiles {
-    profile_dns46 { }
-    udp { }
-  }
-  rules {
-    rule_dns46
-  }
-  source 0.0.0.0/0
-  source-address-translation {
-    type automap
-  }
-  vlans-disabled
-}                  
+    ltm virtual vs-dns46 {
+      destination 10.1.101.222:domain
+      ip-protocol udp
+      mask 255.255.255.255
+      profiles {
+        profile_dns46 { }
+        udp { }
+      }
+      rules {
+        rule_dns46
+      }
+      source 0.0.0.0/0
+      source-address-translation {
+        type automap
+      }
+      vlans-disabled
+    }                  
     ```
 
 ### NAT46 iRule
@@ -75,24 +75,24 @@ ltm virtual vs-dns46 {
 2. Address translation must be enabled on NAT46 virtual server
 
     ```
-ltm virtual vs-nat46 {
-  destination 100.64.0.0:any
-  ip-protocol any
-  mask 255.255.0.0
-  profiles {
-    fastL4 { }
-  }
-  rules {
-    rule_nat46
-  }
-  source 0.0.0.0/0
-  source-address-translation {
-    pool snat-pool-nat46
-    type snat
-  }
-  translate-port disabled
-  vlans-disabled
-}
+    ltm virtual vs-nat46 {
+      destination 100.64.0.0:any
+      ip-protocol any
+      mask 255.255.0.0
+      profiles {
+        fastL4 { }
+      }
+      rules {
+        rule_nat46
+      }
+      source 0.0.0.0/0
+      source-address-translation {
+        pool snat-pool-nat46
+        type snat
+      }
+      translate-port disabled
+      vlans-disabled
+    }
     ```
 
 ## Sample Output
