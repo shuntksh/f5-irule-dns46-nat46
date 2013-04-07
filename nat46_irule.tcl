@@ -1,7 +1,7 @@
 #
 # Simple NAT46 iRule rev 0.2 (2012/12/17)
 #
-#   Written By:  Shun Takahashi (s.takahashi at f5.com)
+#   Written By:  Shun Takahashi 
 #
 #   Description: Lookup table to convert DNS46 internal only IPv4 destination
 #                address to original IPv6 desitination and SNAT client addr to

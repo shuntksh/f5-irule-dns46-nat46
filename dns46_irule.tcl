@@ -1,7 +1,7 @@
 #
 # Simple DNS46 iRule rev 0.5 (2012/12/17)
 #
-#   Written By:  Shun Takahashi (s.takahashi at f5.com)
+#   Written By:  Shun Takahashi
 #
 #   Description: AAAA records to be (retrieved and) translated to 
 #                an A record by this DNS46 iRule if and only if 
