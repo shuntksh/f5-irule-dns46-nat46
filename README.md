@@ -97,7 +97,7 @@ Currently, no application level gateway has been implemented or tested. Only HTT
 
 ## Sample Output
 
-<img src="https://raw.github.com/festango/f5-irule-nat46/master/sample/screen_shot.png" alt="Sample Output" width="800">
+<img src="https://raw.github.com/festango/f5-irule-dns46-nat46/master/sample/screen_shot.png" alt="Sample Output" width="800">
 
 
 
