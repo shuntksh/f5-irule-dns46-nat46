@@ -147,7 +147,7 @@ when DNS_RESPONSE {
     # Look up DNS46 table with resolved IPv6 addresses in the list  
     # and store IPv4 NAT46 addresses into a new list if entry is 
     # already created
-    set k_v4ips [table key -subtable "t_dns46" -notouch]
+    set k_v4ips [table keys -subtable "t_dns46" -notouch]
 
     if {$k_v4ips != ""} {
       foreach r_v6ip $resolved_v6ips {
